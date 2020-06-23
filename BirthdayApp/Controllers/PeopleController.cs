@@ -18,7 +18,6 @@ namespace BirthdayApp.Controllers
         }
 
         public static List<People> People { get; set; } = new List<People>();
-        public static List<People> ResultList;
 
         public IActionResult Index(string? message, string? type)
         {
@@ -29,7 +28,6 @@ namespace BirthdayApp.Controllers
 
             TodayBirthdays(this.PeopleRepository.GetAll());
             birthdaysOrderby = BirthdaysOrderby(this.PeopleRepository.GetAll());
-            //birthdaysOrderby.Sort((x, y) => x.Birthday.CompareTo(y.Birthday));
 
             void TodayBirthdays(List<People> peopleList)
             {

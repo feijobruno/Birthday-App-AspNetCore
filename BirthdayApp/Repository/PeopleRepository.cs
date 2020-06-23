@@ -89,7 +89,7 @@ namespace BirthdayApp.Repository
             using (var connection = new SqlConnection(this.ConnectionString))
             {
 
-                var sql = @" SELECT Id, FirstName, LastName, Birthday FROM TB_PEOPLE";
+                var sql = @" SELECT Id, FirstName, LastName, Birthday FROM TB_PEOPLE ORDER BY Birthday ASC";
                 if (connection.State != System.Data.ConnectionState.Open)
                 {
                     connection.Open();
