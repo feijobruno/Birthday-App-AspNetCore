@@ -22,40 +22,15 @@ namespace BirthdayApp.Controllers
         public IActionResult Index(string? message, string? type)
         {
             // READ
-            var peopleList = this.PeopleRepository.GetAll();
-            List<People> todayBirthdays = new List<People>();
-            List<People> birthdaysOrderby = new List<People>();
-
-            TodayBirthdays(this.PeopleRepository.GetAll());
-            birthdaysOrderby = BirthdaysOrderby(this.PeopleRepository.GetAll());
-
-            void TodayBirthdays(List<People> peopleList)
-            {
-                var today = DateTime.Today;
-                var select = PeopleRepository.GetAll().Where(person => person.Birthday.Day.Equals(today.Day) && person.Birthday.Month.Equals(today.Month));
-                foreach (var person in select)
-                {
-                    todayBirthdays.Add(person);
-                }
-            }
-
-            List<People> BirthdaysOrderby(List<People> peopleList)
-            {
-                List<People> result = new List<People>();
-                var select = PeopleRepository.GetAll().OrderBy(person => person.NextBirthday());
-                foreach (var person in select)
-                {
-
-                    result.Add(person);
-                }
-                return result;
-            }
+            var today = DateTime.Today;
+            var todayBirthdays = this.PeopleRepository.GetAll().Where(person => person.Birthday.Day.Equals(today.Day) && person.Birthday.Month.Equals(today.Month));
+            var birthdaysOrderby = this.PeopleRepository.GetAll().OrderBy(person => person.NextBirthday());
 
             ViewBag.todayBirthdays = todayBirthdays;
             ViewBag.birthdaysOrderBy = birthdaysOrderby;
             ViewBag.message = message;
             ViewBag.type = type;
-            return View(peopleList);
+            return View();
         }
         public IActionResult New()
         {

@@ -89,7 +89,7 @@ namespace BirthdayApp.Repository
             using (var connection = new SqlConnection(this.ConnectionString))
             {
 
-                var sql = @" SELECT Id, FirstName, LastName, Birthday FROM TB_PEOPLE ORDER BY Birthday ASC";
+                var sql = @" SELECT Id, FirstName, LastName, Birthday FROM TB_PEOPLE";
                 if (connection.State != System.Data.ConnectionState.Open)
                 {
                     connection.Open();
@@ -107,13 +107,14 @@ namespace BirthdayApp.Repository
                         LastName = reader["LastName"].ToString(),
                         Birthday = Convert.ToDateTime(reader["Birthday"])
                     };
-
                     result.Add(people);
+                    //result.OrderBy(people => people.NextBirthday());
                 }
                 connection.Close();
             }
             return result;
         }
+
 
         public People GetById(Guid id)
         {
@@ -131,7 +132,6 @@ namespace BirthdayApp.Repository
                 {
                     connection.Open();
                 }
-
 
                 SqlCommand sqlCommand = connection.CreateCommand();
                 sqlCommand.CommandText = sql;
